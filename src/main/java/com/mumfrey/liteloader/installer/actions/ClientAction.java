@@ -82,8 +82,7 @@ public abstract class ClientAction implements ActionType
     {
         File libraries = new File(target, "libraries");
         File targetLibraryFile = VersionInfo.getLibraryPath(libraries);
-        if (!this.extractLibrary(targetLibraryFile, VersionInfo.getContainedFile())) return false;
-        return true;
+        return this.extractLibrary(targetLibraryFile, VersionInfo.getContainedFile());
     }
     
     protected final boolean extractLibrary(File targetLibraryFile, String containedFile) throws HeadlessException

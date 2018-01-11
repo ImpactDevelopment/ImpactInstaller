@@ -334,7 +334,7 @@ public class ClientInstallAction extends ClientAction
         return true;
     }
     
-    private JsonNode readLauncherProfiles(File launcherProfiles) throws HeadlessException, RuntimeException
+    private JsonNode readLauncherProfiles(File launcherProfiles) throws RuntimeException
     {
         JdomParser parser = new JdomParser();
         JsonNode jsonProfileData;
@@ -353,7 +353,7 @@ public class ClientInstallAction extends ClientAction
         }
         catch (Exception e)
         {
-            throw Throwables.propagate(e);
+            throw new RuntimeException(e);
         }
         return jsonProfileData;
     }
