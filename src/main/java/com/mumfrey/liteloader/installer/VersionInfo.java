@@ -15,12 +15,11 @@ import com.mumfrey.liteloader.installer.targets.TargetVersion;
 
 import argo.jdom.JdomParser;
 import argo.jdom.JsonNode;
-import argo.jdom.JsonRootNode;
 
 public class VersionInfo
 {
     public static final VersionInfo INSTANCE = new VersionInfo();
-    public final JsonRootNode versionData;
+    public final JsonNode versionData;
 
     public VersionInfo()
     {

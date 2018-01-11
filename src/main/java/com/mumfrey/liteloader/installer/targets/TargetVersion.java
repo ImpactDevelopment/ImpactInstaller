@@ -1,7 +1,6 @@
 package com.mumfrey.liteloader.installer.targets;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +12,8 @@ import javax.swing.JOptionPane;
 
 import argo.jdom.JdomParser;
 import argo.jdom.JsonField;
+import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
-import argo.jdom.JsonRootNode;
 import argo.jdom.JsonStringNode;
 import argo.saj.InvalidSyntaxException;
 
@@ -37,7 +36,7 @@ public class TargetVersion implements InstallationModifier
     private final ActionModifier modifier;
     private String minecraftArguments;
 
-    public TargetVersion(File file) throws IllegalArgumentException, FileNotFoundException, IOException, InvalidSyntaxException
+    public TargetVersion(File file) throws IllegalArgumentException, IOException, InvalidSyntaxException
     {
         if (!file.isDirectory())
         {
@@ -51,7 +50,7 @@ public class TargetVersion implements InstallationModifier
             throw new IllegalArgumentException("Version json file not found reading: " + json.getAbsolutePath());
         }
 
-        JsonRootNode versionData = new JdomParser().parse(Files.newReader(json, Charsets.UTF_8));
+        JsonNode versionData = new JdomParser().parse(Files.newReader(json, Charsets.UTF_8));
         String versionId = versionData.getStringValue("id");
         if (versionId == null || !versionId.equals(name))
         {
@@ -93,7 +92,7 @@ public class TargetVersion implements InstallationModifier
     }
 
     @Override
-    public JsonRootNode modifyVersion(JsonRootNode versionJson)
+    public JsonNode modifyVersion(JsonNode versionJson)
     {
         try
         {
@@ -231,7 +230,7 @@ public class TargetVersion implements InstallationModifier
      * @param versionData
      * @return
      */
-    private static String getMinecraftArguments(JsonRootNode versionData)
+    private static String getMinecraftArguments(JsonNode versionData)
     {
         String minecraftArguments = versionData.getStringValue("minecraftArguments");
         if (minecraftArguments != null)

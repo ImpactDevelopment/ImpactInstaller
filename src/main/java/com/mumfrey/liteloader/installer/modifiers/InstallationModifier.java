@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Set;
 
 import argo.jdom.JsonField;
-import argo.jdom.JsonRootNode;
+import argo.jdom.JsonNode;
 
 public interface InstallationModifier
 {
     public abstract String getExclusivityKey();
 
-    public abstract JsonRootNode modifyVersion(JsonRootNode versionJson);
+    public abstract JsonNode modifyVersion(JsonNode versionJson);
 
     public abstract void modifyFields(List<JsonField> fields);
 

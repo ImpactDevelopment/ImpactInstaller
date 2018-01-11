@@ -17,7 +17,6 @@ import com.mumfrey.liteloader.installer.VersionInfo;
 import argo.jdom.JsonField;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
-import argo.jdom.JsonRootNode;
 import argo.jdom.JsonStringNode;
 
 public abstract class CascadeModifier implements ActionModifier
@@ -35,7 +34,7 @@ public abstract class CascadeModifier implements ActionModifier
     protected Map<String, List<JsonNode>> validVersionLibraries = new HashMap<String, List<JsonNode>>();
 
     @Override
-    public JsonRootNode modifyVersion(JsonRootNode versionJson)
+    public JsonNode modifyVersion(JsonNode versionJson)
     {
         String tweakClass = this.getTweakClass();
 

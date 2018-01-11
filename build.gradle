@@ -6,8 +6,8 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.0'
-        classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:1.6.1'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+        classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:2.4.2'
     }
 }
 
@@ -15,8 +15,8 @@ apply plugin: 'java'
 apply plugin: 'edu.sc.seis.launch4j'
 apply plugin: 'com.github.johnrengelman.shadow'
 
-// launch4j dependsOn doesn't work
-defaultTasks 'prepareManifest', 'build', 'launch4j', 'gather'
+// createExe dependsOn doesn't work
+defaultTasks 'prepareManifest', 'build', 'createExe', 'gather'
 
 
 group               = 'com.mumfrey'
@@ -25,16 +25,16 @@ version             = "${project.verMajor}.${project.verMinor}${project.revision
 ext.mcversion       = "${project.verMajor}.${project.verMinor}${project.revision}"
 ext.msversion       =  "${project.verMajor}.${project.verMinor}.${project.verRevision}.${project.verBuild}"
 archivesBaseName    = 'liteloader-installer'
-targetCompatibility = '1.6'
-sourceCompatibility = '1.6'
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile 'com.google.guava:guava:17.0'
-    compile 'net.sourceforge.argo:argo:3.7'
+    compile 'com.google.guava:guava:21.0'
+    compile 'net.sourceforge.argo:argo:4.6'
 }
 
 // resolve problem with shadowJar
@@ -64,7 +64,7 @@ task prepareManifest(type: Copy) {
     )
 }
 
-launch4j {
+createExe {
     copyConfigurable = project.tasks.shadowJar.outputs.files
     jar              = 'lib/' + project.tasks.shadowJar.archiveName
     icon             = "${projectDir}/launch4j/liteloader_installer_icon.ico"
@@ -73,8 +73,8 @@ launch4j {
     version          = project.msversion
     internalName     = project.sxsname
     productName      = "LiteLoader"
-    description      = "LiteLoader Installer for Minecraft ${project.mcversion} release {project.verRelease}"
-    copyright        = "Copyright (C) 2013-15 Adam Mummery-Smith"
+    fileDescription  = "LiteLoader Installer for Minecraft ${project.mcversion} release {project.verRelease}"
+    copyright        = "Copyright (C) 2013-2018 Adam Mummery-Smith"
 }
 
 task gather(type: Copy) {

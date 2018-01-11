@@ -9,7 +9,6 @@ import java.util.Map;
 
 import argo.jdom.JdomParser;
 import argo.jdom.JsonNode;
-import argo.jdom.JsonRootNode;
 
 import com.google.common.base.Throwables;
 
@@ -94,7 +93,7 @@ public enum InstallerModifier
                         try
                         {
                             JdomParser parser = new JdomParser();
-                            JsonRootNode json = parser.parse(new FileReader(versionJson));
+                            JsonNode json = parser.parse(new FileReader(versionJson));
                             List<JsonNode> libraries = json.getArrayNode("libraries");
                             for (JsonNode library : libraries)
                             {

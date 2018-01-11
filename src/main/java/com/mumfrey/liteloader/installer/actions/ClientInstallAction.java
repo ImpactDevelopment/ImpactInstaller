@@ -31,7 +31,6 @@ import argo.jdom.JdomParser;
 import argo.jdom.JsonField;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
-import argo.jdom.JsonRootNode;
 import argo.jdom.JsonStringNode;
 import argo.saj.InvalidSyntaxException;
 
@@ -246,7 +245,7 @@ public class ClientInstallAction extends ClientAction
 
             if (!this.writeVersionFile(modifiers, versionTarget)) return false;
 
-            JsonRootNode jsonProfileData = this.readLauncherProfiles(launcherProfiles);
+            JsonNode jsonProfileData = this.readLauncherProfiles(launcherProfiles);
             if (jsonProfileData == null) return false;
 
             HashMap<JsonStringNode, JsonNode> modifiedData = this.modifyProfileData(target, jsonProfileData, modifiers);
@@ -310,7 +309,7 @@ public class ClientInstallAction extends ClientAction
     private boolean writeVersionFile(List<InstallationModifier> modifiers, File versionTarget) throws HeadlessException
     {
         File versionJsonFile = new File(versionTarget, this.getVersion() + ".json");
-        JsonRootNode versionJson = JsonNodeFactories.object(VersionInfo.getVersionInfo().getFields());
+        JsonNode versionJson = JsonNodeFactories.object(VersionInfo.getVersionInfo().getFields());
 
         try
         {
@@ -335,10 +334,10 @@ public class ClientInstallAction extends ClientAction
         return true;
     }
     
-    private JsonRootNode readLauncherProfiles(File launcherProfiles) throws HeadlessException, RuntimeException
+    private JsonNode readLauncherProfiles(File launcherProfiles) throws HeadlessException, RuntimeException
     {
         JdomParser parser = new JdomParser();
-        JsonRootNode jsonProfileData;
+        JsonNode jsonProfileData;
 
         try
         {
@@ -359,7 +358,7 @@ public class ClientInstallAction extends ClientAction
         return jsonProfileData;
     }
     
-    private HashMap<JsonStringNode, JsonNode> modifyProfileData(File target, JsonRootNode jsonProfileData, List<InstallationModifier> modifiers)
+    private HashMap<JsonStringNode, JsonNode> modifyProfileData(File target, JsonNode jsonProfileData, List<InstallationModifier> modifiers)
     {
         Set<String> jvmArgs = new LinkedHashSet<String>();
         List<InstallationModifier> allModifiers = Collections.unmodifiableList(modifiers);
@@ -400,13 +399,13 @@ public class ClientInstallAction extends ClientAction
         }
 
         profileCopy.put(JsonNodeFactories.string(this.getProfileName()), JsonNodeFactories.object(fields));
-        JsonRootNode profileJsonCopy = JsonNodeFactories.object(profileCopy);
+        JsonNode profileJsonCopy = JsonNodeFactories.object(profileCopy);
         modifiedData.put(JsonNodeFactories.string("profiles"), profileJsonCopy);
 
         return modifiedData;
     }
     
-    private boolean writeLauncherProfiles(JsonRootNode jsonProfileData, File launcherProfiles) throws HeadlessException
+    private boolean writeLauncherProfiles(JsonNode jsonProfileData, File launcherProfiles) throws HeadlessException
     {
         try
         {
