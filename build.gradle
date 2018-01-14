@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
-        classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:2.4.2'
+        classpath 'gradle.plugin.edu.sc.seis.gradle:launch4j:2.4.3'
     }
 }
 
@@ -56,8 +56,8 @@ shadowJar {
 }
 
 task prepareManifest(type: Copy) {
-    from 'launch4j/liteloader_installer_manifest.xml'
-    into tasks.launch4j.temporaryDir
+    from 'createExe/liteloader_installer_manifest.xml'
+    into tasks.createExe.temporaryDir
     expand(
         artefact:  project.sxsname,
         msversion: project.msversion
@@ -67,8 +67,8 @@ task prepareManifest(type: Copy) {
 createExe {
     copyConfigurable = project.tasks.shadowJar.outputs.files
     jar              = 'lib/' + project.tasks.shadowJar.archiveName
-    icon             = "${projectDir}/launch4j/liteloader_installer_icon.ico"
-    manifest         = "${tasks.launch4j.temporaryDir}/liteloader_installer_manifest.xml"
+    icon             = "${projectDir}/createExe/liteloader_installer_icon.ico"
+    manifest         = "${tasks.createExe.temporaryDir}/liteloader_installer_manifest.xml"
     outfile          = tasks.shadowJar.archiveName - ".jar" + ".exe"
     version          = project.msversion
     internalName     = project.sxsname
@@ -78,8 +78,8 @@ createExe {
 }
 
 task gather(type: Copy) {
-    dependsOn 'launch4j'
-    from 'build/launch4j/' + launch4j.outfile
+    dependsOn 'createExe'
+    from 'build/createExe/' + createExe.outfile
     into 'build/libs/'
 }
 
