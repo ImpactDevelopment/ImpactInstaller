@@ -20,10 +20,10 @@ defaultTasks 'prepareManifest', 'build', 'createExe', 'gather'
 
 
 group               = 'com.mumfrey'
-ext.revision        = project.verRevision == "0" ? "" : ".${project.verRevision}"
-version             = "${project.verMajor}.${project.verMinor}${project.revision}${project.verRelease}"
-ext.mcversion       = "${project.verMajor}.${project.verMinor}${project.revision}"
-ext.msversion       =  "${project.verMajor}.${project.verMinor}.${project.verRevision}.${project.verBuild}"
+ext.revision        = project.revisionVersion == "0" ? "" : ".${project.revisionVersion}"
+version             = "${project.minecraftVersion}-${project.impactVersion}${ext.revisionVersion}"
+ext.mcversion       = "${project.minecraftVersion}"
+ext.msversion       = "${project.minecraftVersion}-${project.impactVersion}${ext.revisionVersion}"
 archivesBaseName    = 'liteloader-installer'
 targetCompatibility = '1.8'
 sourceCompatibility = '1.8'
@@ -73,7 +73,7 @@ createExe {
     version          = project.msversion
     internalName     = project.sxsname
     productName      = "LiteLoader"
-    fileDescription  = "LiteLoader Installer for Minecraft ${project.mcversion} release {project.verRelease}"
+    fileDescription  = "LiteLoader Installer for Minecraft ${project.mcversion} revision ${project.revisionVersion}"
     copyright        = "Copyright (C) 2013-2018 Adam Mummery-Smith"
 }
 
